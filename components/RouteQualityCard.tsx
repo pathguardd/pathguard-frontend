@@ -1,4 +1,5 @@
 import type { RouteQuote } from "@/lib/api";
+import { HopList } from "@/components/HopList";
 
 const flagColor: Record<RouteQuote["liquidity_flag"], string> = {
   healthy: "#1a7f37",
@@ -28,6 +29,7 @@ export function RouteQualityCard({ quote }: { quote: RouteQuote }) {
         <span>Effective slippage</span>
         <span>{quote.effective_slippage_pct}%</span>
       </div>
+      <HopList hops={quote.hops} />
       <div
         style={{
           marginTop: 8,
