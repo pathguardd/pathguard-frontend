@@ -49,10 +49,7 @@ describe("useRouteQuality", () => {
   });
 
   it("transitions to error with the failure message on a non-ok response", async () => {
-    vi.stubGlobal(
-      "fetch",
-      vi.fn().mockResolvedValue({ ok: false, status: 502 }),
-    );
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, status: 502 }));
 
     const { result } = renderHook(() => useRouteQuality());
     act(() => {

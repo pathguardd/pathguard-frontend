@@ -1,6 +1,4 @@
-export type Asset =
-  | { native: null }
-  | { issued: { code: string; issuer: string } };
+export type Asset = { native: null } | { issued: { code: string; issuer: string } };
 
 export type LiquidityFlag = "healthy" | "thin" | "danger";
 

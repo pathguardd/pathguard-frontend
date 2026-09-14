@@ -26,9 +26,8 @@ export default function MultiHopPage() {
       </p>
       <h1>PathGuard — Multi-hop route</h1>
       <p>
-        Simulates a path payment across an explicit chain of assets, hop by
-        hop, and reports the worst hop&apos;s liquidity signal for the whole
-        route.
+        Simulates a path payment across an explicit chain of assets, hop by hop, and reports the
+        worst hop&apos;s liquidity signal for the whole route.
       </p>
 
       <div style={{ marginBottom: 16 }}>
