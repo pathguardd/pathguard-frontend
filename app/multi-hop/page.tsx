@@ -2,39 +2,37 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouteQuality } from "@/lib/useRouteQuality";
+import { PathBuilder } from "@/components/PathBuilder";
 import { RouteQualityCard } from "@/components/RouteQualityCard";
-import { AssetInput } from "@/components/AssetInput";
+import { useMultiHopRouteQuality } from "@/lib/useMultiHopRouteQuality";
 import type { Asset } from "@/lib/api";
 
-export default function HomePage() {
-  const [sendAsset, setSendAsset] = useState<Asset>({ native: null });
-  const [destAsset, setDestAsset] = useState<Asset>({
-    issued: { code: "USDC", issuer: "" },
-  });
+export default function MultiHopPage() {
+  const [path, setPath] = useState<Asset[]>([
+    { native: null },
+    { issued: { code: "USDC", issuer: "" } },
+  ]);
   const [sendAmount, setSendAmount] = useState("1000");
-  const { status, quote, error, check } = useRouteQuality();
+  const { status, quote, error, check } = useMultiHopRouteQuality();
 
   async function checkRoute() {
-    await check({
-      send_asset: sendAsset,
-      dest_asset: destAsset,
-      send_amount: sendAmount,
-      max_slippage_pct: "1.0",
-    });
+    await check({ path, send_amount: sendAmount, max_slippage_pct: "1.0" });
   }
 
   return (
     <main>
-      <h1>PathGuard</h1>
-      <p>DEX routing and slippage sentinel for Stellar path payments.</p>
       <p>
-        <Link href="/multi-hop">Multi-hop route lookup →</Link>
+        <Link href="/">← Single-hop lookup</Link>
+      </p>
+      <h1>PathGuard — Multi-hop route</h1>
+      <p>
+        Simulates a path payment across an explicit chain of assets, hop by
+        hop, and reports the worst hop&apos;s liquidity signal for the whole
+        route.
       </p>
 
-      <div style={{ display: "flex", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
-        <AssetInput label="Send" value={sendAsset} onChange={setSendAsset} />
-        <AssetInput label="Destination" value={destAsset} onChange={setDestAsset} />
+      <div style={{ marginBottom: 16 }}>
+        <PathBuilder path={path} onChange={setPath} />
       </div>
 
       <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
